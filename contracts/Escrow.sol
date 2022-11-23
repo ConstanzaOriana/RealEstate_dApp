@@ -1,6 +1,8 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+
 interface IERC721 {
     function transferFrom(
         address _from,
@@ -9,7 +11,7 @@ interface IERC721 {
     ) external;
 }
 
-contract Escrow {
+contract Escrow{
     address public nftAddress;
     address payable public seller;
     address public inspector;
@@ -57,43 +59,52 @@ contract Escrow {
     }
 
     // Put Under Contract (only buyer - payable escrow)   
-    function depositEarnest(uint256 _TokenID) onlyBuyer public payable {
+    function depositEarnest(uint256 _nftID) onlyBuyer public payable {
 		uint256 _payedAmount = msg.value;
-		require(_payedAmount >= escrowAmount[_TokenID], "Not enough");
+		require(_payedAmount >= escrowAmount[_nftID], "Not enough");
 	}
 
     // Update Inspection Status (only inspector)
-    function updateInspectionStatus () public view onlyInspector returns (bool) {
+    function updateInspectionStatus (uint256 _nftID) public view onlyInspector returns (bool) {
 		require(isListed[_nftID] == true, "That NFT doesnt exist");
 		inspectionPassed[_nftID] == !inspectionPassed[_nftID];
 	}
     
 
     // Approve Sale
-    function approveSale  /*complete*/ (uint256 _nftID) public returns (bool){
-        //approval[_nftID][msg.sender] = true;
+    function approveSale (uint256 _nftID) public returns (bool){
 		require(isListed[_nftID] == true, "The NFT is not listed");
 		require(inspectionPassed[_nftID]  == true, "The inspection hasnt been approved");
     }
 
     // Finalize Sale
-	function finalizeSale() public onlyInspector{
-	// -> Require inspection status 
-    // -> Require sale to be authorized
-    // -> Require funds to be correct amount
-    // -> Transfer NFT to buyer
-    // -> Transfer Funds to Seller
+	function finalizeSale(uint256 _nftID, uint256 _escrowAmount, bool approval) public onlyInspector{
+		// -> Require inspection status 
+		require(inspectionPassed[_nftID]  == true, "The inspection hasnt been approved");
+		// -> Require funds to be correct amount
+		require(escrowAmount[_nftID] == _escrowAmount, "Funds are not received in the correct amount");
+		// -> Require sale to be authorized
+		require(approveSale[_nftID][msg.sender] == true, "Sale is not authorized");
+		// -> Transfer NFT to buyer
+		transferFrom(seller, msg.sender, _nftID);
+        purchasePrice[_nftID] = 0; // not for sale anymore
+    	// -> Transfer Funds to Seller
+		payable(seller).transfer(msg.value);
 	}
     
-    // Cancel Sale (handle earnest deposit)
-    function cancelSale () /*complete*/ {
-	// -> if inspection status is not approved, then refund, otherwise send to seller
+    // Cancel Sale (handle earnest deposit) if inspection status is not approved, then refund, otherwise send to seller
+    function cancelSale (uint256 _nftID) public view {
+		if(!inspectionPassed[_nftID]){
+			transferFrom(seller, msg.sender, _nftID);
+		} else {
+			payable(seller).transfer(msg.value);
+		}
 	}
 
     //implement a special receive function in order to receive funds and increase the balance
-    function receive() external payable {
-
-	}
+    // function receive() external payable {
+		
+	// }
 
     //function getBalance to check the current balance
     function getBalance() /*complete*/ public view returns (uint256) {        
