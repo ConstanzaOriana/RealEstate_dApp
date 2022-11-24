@@ -1,7 +1,7 @@
 {
-    "name": "Architectural CA Modern Home",
-    "address": "70780 Tamarisk Ln, Rancho Mirage, CA 92270",
-    "description": "Beautiful modern home in Rancho Mirage",
+    "name": "Chandler & Joey's Apartment",
+    "address": "545 Grove Street, New York, Number 19",
+    "description": "To play videogames and eat chips",
     "image": "https://ipfs.io/ipfs/QmQUozrHLAusXDxrvsESJ3PYB3rUeUuBAvVWw6nop2uu7c/2.png",
     "id": "2",
     "attributes": [
@@ -11,15 +11,15 @@
         },
         {
             "trait_type": "Type of Residence",
-            "value": "Single family residence"
+            "value": "Apartment"
         },
         {
             "trait_type": "Bed Rooms",
-            "value": 4
+            "value": 2
         },
         {
             "trait_type": "Bathrooms",
-            "value": 4
+            "value": 1
         },
         {
             "trait_type": "Square Feet",
@@ -27,7 +27,7 @@
         },
         {
             "trait_type": "Year Built",
-            "value": 1980
+            "value": 2005
         }
     ]
 }
