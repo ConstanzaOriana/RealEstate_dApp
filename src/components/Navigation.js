@@ -17,7 +17,6 @@ const Navigation = ({ account, setAccount }) => {
             </ul>
 
             <div className='nav__brand'>
-                <img src={logo} alt="Logo" />
                 <h1>Friends NFT Properties</h1>
             </div>
 

@@ -1,13 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+@font-face {
+  font-family: principal;
+  src: url(./assets/GABRWFFR.TTF);
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: blueviolet;
 }
 
 :root {
-  --clr-white: #FFFFFF;
   --clr-black: #202020;
   --clr-grey: #707070;
   --clr-blue: #6C63FF;
@@ -17,7 +20,6 @@
 
 body {
   margin: 0;
-  font-family: "Open Sans";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -29,6 +31,7 @@ nav {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
+  font-family: principal;
 }
 
 .nav__brand {
@@ -45,16 +48,15 @@ nav {
 }
 
 .nav__brand h1 {
-  color:rgba(44, 121, 173, 0.7);
+  color:rgba(234, 227, 22, 0.7);
   font-size: 2.5em;
-  font-weight: 800;
+  font-weight: 500;
 }
 
 .nav__links {
   display: flex;
   justify-content: center;
   align-items: center;
-
   list-style: none;
 }
 
@@ -63,12 +65,14 @@ nav {
 }
 
 .nav__links li a {
+  font-size: x-large;
   text-decoration: none;
-  color: var(--clr-black);
+  color: rgba(234, 227, 22, 0.7);
 }
 
 .nav__links li a:hover {
-  color: var(--clr-blue);
+  font-size: xx-large;
+  transition: 0.5s;
 }
 
 .nav__connect {
@@ -76,13 +80,13 @@ nav {
   height: 50px;
   margin: 0 auto;
 
-  background-color: rgba(44, 121, 173, 0.7);
-  color: var(--clr-white);
+  background-color: rgba(234, 227, 22, 0.7);
+  color: rgb(103, 13, 115);
 
   border: none;
   border-radius: 4px;
 
-  font-family: "Open Sans";
+  font-family: principal;
   font-size: 1.10em;
   font-weight: 600;
 
@@ -91,7 +95,8 @@ nav {
 }
 
 .nav__connect:hover {
-  background-color: var(--clr-blue-2);
+  background-color: rgb(103, 13, 115);
+  color:rgba(234, 227, 22, 0.7)
 }
 
 /* ------------------------------------------------------ */
@@ -106,23 +111,23 @@ header {
   position: relative;
 }
 
-.header__title {
+/* .header__title {
   position: absolute;
   top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  color: var(--clr-white);
+  color:white;
   font-size: 2em;
-
   width: 100%;
   text-align: center;
-}
+  font-family: principal;
+  font-weight: 200;
+  background-color: transparent;
+} */
 
 .header__search {
   padding: 25px;
   min-width: 40%;
-
   position: absolute;
   top: 45%;
   left: 50%;
@@ -130,9 +135,10 @@ header {
 }
 
 .header__search::placeholder {
-  font-family: "Open Sans";
+  font-family: principal;
   font-size: 1.25em;
-  font-weight: 600;
+  font-weight: 100;
+  color: white;
 }
 
 .header__search:hover {
@@ -196,13 +202,13 @@ header {
 }
 
 .card__info h4 {
-  font-family: "Open Sans";
+  font-family: principal;
   font-size: 1.25em;
   font-weight: 600;
 }
 
 .card__info p {
-  font-family: "Open Sans";
+  font-family: principal;
   font-size: 0.90em;
   margin-top: 5px;
 }
@@ -213,8 +219,6 @@ header {
 .home {
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
-
   position: fixed;
   top: 50%;
   left: 50%;
@@ -237,8 +241,6 @@ header {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-
-  /* background: var(--clr-white); */
 }
 
 .home__image {
@@ -293,7 +295,7 @@ header {
   margin: 20px 5px;
   border: none;
   border-radius: 4px;
-  font-family: "Open Sans";
+  font-family: principal;
   font-size: 1.10em;
   font-weight: 600;
   cursor: pointer;
@@ -305,28 +307,28 @@ header {
   height: 50px;
 }
 
-.home__buy:hover {
+/* .home__buy:hover {
   background-color: var(--clr-blue-2);
-}
+} */
 
 .home__contact {
   width: 150px;
   height: 50px;
 
-  background-color: transparent;
+  /* background-color: transparent; */
   color: var(--clr-blue);
 
   border: 1px solid var(--clr-blue);
 }
 
 .home__contact:hover {
-  background-color: #f7f7f7;
+  /* background-color: #f7f7f7; */
   color: var(--clr-blue-2);
 }
 
 .home__owned {
   height: 50px;
-  background-color: var(--clr-green);
+  /* background-color: var(--clr-green); */
 
   display: flex;
   justify-content: center;
