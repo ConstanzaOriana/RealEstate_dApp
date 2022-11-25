@@ -10,14 +10,6 @@
   background-color: blueviolet;
 }
 
-:root {
-  --clr-black: #202020;
-  --clr-grey: #707070;
-  --clr-blue: #6C63FF;
-  --clr-blue-2: #4c46b6;
-  --clr-green: #4fb646;
-}
-
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -38,7 +30,6 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-
   padding: 20px;
 }
 
@@ -155,6 +146,10 @@ header {
 }
 
 .cards__section h3 {
+  color:  white;
+  font-family: principal;
+  font-weight: 200;
+  font-size: x-large;
   margin: 50px 0 20px;
 }
 

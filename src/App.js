@@ -67,7 +67,7 @@ function App() {
 
       <div className='cards__section'>
 
-        <h3>Homes For You</h3>
+        <h3>Get to live & hang where the F•R•I•E•N•D•S did</h3>
 
         <hr />
 
