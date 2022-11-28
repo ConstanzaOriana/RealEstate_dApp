@@ -17,7 +17,7 @@ async function main() {
   console.log(`Minting 3 properties...\n`)
 
   for (let i = 0; i < 3; i++) {
-    const transaction = await realEstate.connect(seller).mint(`https://ipfs.filebase.io/ipfs/Hzhd9K4rpi7fMm4ZAzWlQelEztmqq2oujRLakO7g/${i + 1}.json`)
+    const transaction = await realEstate.connect(seller).mint(`https://bafybeihbrv4avon37b5qmacb4eilr7zvcxmvgdf3naft2uwzfdbo6owyui.ipfs.nftstorage.link/${i + 1}.json`)
     await transaction.wait()
   }
 

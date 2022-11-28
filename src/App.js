@@ -6,11 +6,10 @@ import Navigation from './components/Navigation';
 import Home from './components/Home';
 
 // ABIs
-import RealEstateABI from "./abis/RealEstate.json"
+import RealEstateABI from './abis/RealEstate.json'
 import EscrowABI from './abis/Escrow.json'
 
 // Config
-import config from './config.json';
 let realEstateAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 let escrowAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
 let ethSigner
@@ -25,38 +24,44 @@ function App() {
   const [home, setHome] = useState({})
   const [toggle, setToggle] = useState(false);
 
+  //here the Blockchain links with the ReactApp
   const loadBlockchainData = async () => {
+
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     setProvider(provider)
-    const network = await provider.getNetwork()
+    const network = provider.getNetwork()
     ethSigner = provider.getSigner()
 
+    //conecting RealEstate Contract.
     const RealEstateInstance = new ethers.Contract(realEstateAddress, RealEstateABI, provider)
     const totalSupply = await RealEstateInstance.totalSupply();
-    const homes = [] 
+    const homes = [] //storage of housing/nfts
 
     const escrowInstance = new ethers.Contract(escrowAddress, EscrowABI, provider)
     setEscrow(escrowInstance)
 
     for (var i = 1; i <= totalSupply; i++) {
-      const uri = await RealEstateInstance.tokenURI(i)
+      const uri = await RealEstateInstance.tokenURI(i);
       const response = await fetch(uri, {
         method: "GET",
         headers: {
           Accept: "application/json"
         },
-      })
+      }).then((res) => res.json())
+
       homes.push(response)
     }
 
     setHomes(homes)
 
-
+    //Interaction with Connect Metamask button
+    // Account Change function
     window.ethereum.on('accountsChanged', async () => {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       const account = ethers.utils.getAddress(accounts[0])
       setAccount(account);
     })
+
   }
 
   useEffect(() => {
