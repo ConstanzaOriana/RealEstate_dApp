@@ -7,7 +7,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: blueviolet;
+  background-color: rgb(150, 78, 216);
 }
 
 body {
@@ -53,17 +53,7 @@ nav {
 
 .nav__links li {
   margin: 0 15px;
-}
-
-.nav__links li a {
-  font-size: x-large;
-  text-decoration: none;
-  color: rgba(234, 227, 22, 0.7);
-}
-
-.nav__links li a:hover {
-  font-size: xx-large;
-  transition: 0.5s;
+  border-color: black;
 }
 
 .nav__connect {
@@ -93,48 +83,14 @@ nav {
 /* ------------------------------------------------------ */
 /* -- HEADER -- */
 
-header {
-  background-image: url("./assets/back.webp");
+/* header {
+  background-image: url("/");
   background-position: center;
   background-size: cover;
   min-height: 40vh;
 
   position: relative;
-}
-
-/* .header__title {
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color:white;
-  font-size: 2em;
-  width: 100%;
-  text-align: center;
-  font-family: principal;
-  font-weight: 200;
-  background-color: transparent;
 } */
-
-.header__search {
-  padding: 25px;
-  min-width: 40%;
-  position: absolute;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.header__search::placeholder {
-  font-family: principal;
-  font-size: 1.25em;
-  font-weight: 100;
-  color: white;
-}
-
-.header__search:hover {
-  outline: 1px solid var(--clr-blue);
-}
 
 /* ------------------------------------------------------ */
 /* -- CARDS -- */
@@ -146,6 +102,8 @@ header {
 }
 
 .cards__section h3 {
+  display: flex;
+  justify-content: center;
   color:  white;
   font-family: principal;
   font-weight: 200;

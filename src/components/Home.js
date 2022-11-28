@@ -18,39 +18,41 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
 
     const fetchDetails = async () => {
         // -- Buyer
+        //call different solidty functions from escrow with its home ID
 
         const buyer = await escrow.buyer(home.id)
-        setBuyer(buyer)
+        setBuyer(buyer) // Test Account 1 en mi metamask (....2266)
 
         const hasBought = await escrow.approval(home.id, buyer)
         setHasBought(hasBought)
 
         // -- Seller
 
-        const seller = await escrow.seller()
-        setSeller(seller)
+        const seller = await escrow.seller();
+        setSeller(seller)// Test Account 2 en mi metamask (....79c98)
 
         const hasSold = await escrow.approval(home.id, seller)
         setHasSold(hasSold)
 
         // -- Lender
 
-        const lender = await escrow.lender()
-        setLender(lender)
+        const lender = await escrow.lender();
+        setLender(lender)// Test Account 3 en mi metamask (....b906)
 
         const hasLended = await escrow.approval(home.id, lender)
         setHasLended(hasLended)
 
         // -- Inspector
 
-        const inspector = await escrow.inspector()
-        setInspector(inspector)
-
+        const inspector = await escrow.inspector();
+        setInspector(inspector)// Test Account 0 en mi metamask (....293bc)
+        
         const hasInspected = await escrow.inspectionPassed(home.id)
         setHasInspected(hasInspected)
     }
 
     const fetchOwner = async () => {
+        
         if (await escrow.isListed(home.id)) return
 
         const owner = await escrow.buyer(home.id)
@@ -115,6 +117,8 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
         fetchOwner()
     }, [hasSold])
 
+    
+
     return (
         <div className="home">
             <div className='home__details'>
@@ -141,10 +145,6 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
                             {(account === inspector) ? (
                                 <button className='home__buy' onClick={inspectHandler} disabled={hasInspected}>
                                     Approve Inspection
-                                </button>
-                            ) : (account === lender) ? (
-                                <button className='home__buy' onClick={lendHandler} disabled={hasLended}>
-                                    Approve & Lend
                                 </button>
                             ) : (account === seller) ? (
                                 <button className='home__buy' onClick={sellHandler} disabled={hasSold}>

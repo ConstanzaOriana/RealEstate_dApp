@@ -14,6 +14,7 @@ contract Escrow{
     address public nftAddress;
     address payable public seller;
     address public inspector;
+    address public lender;
 
 	// modifier onlyInspector => verify for "Only inspector call this method"
 	modifier onlyInspector() {
@@ -41,10 +42,11 @@ contract Escrow{
 	mapping(uint256 => bool)  public inspectionPassed;
 	mapping(uint256 => mapping(address => bool)) public approval;
 
-    constructor(address _nftAddress, address payable _seller, address _inspector) {
+    constructor(address _nftAddress, address payable _seller, address _inspector, address _lender) {
         nftAddress = _nftAddress;
         seller = _seller;
         inspector = _inspector;
+        lender = _lender;
     }
 
     function list (uint256 _nftID, address _buyer, uint256 _purchasePrice, uint256 _escrowAmount) public payable onlySeller {
@@ -59,8 +61,7 @@ contract Escrow{
 
     // Put Under Contract (only buyer - payable escrow)   
     function depositEarnest(uint256 _nftID) onlyBuyer(_nftID) public payable {
-		uint256 _payedAmount = msg.value;
-		require(_payedAmount >= escrowAmount[_nftID], "Not enough");
+		require(msg.value >= escrowAmount[_nftID]);
 	}
 
     // Update Inspection Status (only inspector)
@@ -71,16 +72,15 @@ contract Escrow{
 
     // Approve Sale
     function approveSale (uint256 _nftID) public{
-		require(isListed[_nftID] == true, "The NFT is not listed");
-		require(inspectionPassed[_nftID]  == true, "The inspection hasnt been approved");
 		approval[_nftID][msg.sender] = true;
     }
 
     // Finalize Sale
-	function finalizeSale(uint256 _nftID) public onlyInspector{
-    require(inspectionPassed[_nftID]);
+	function finalizeSale(uint256 _nftID) public {
+        require(inspectionPassed[_nftID]);
         require(approval[_nftID][buyer[_nftID]]);
         require(approval[_nftID][seller]);
+        require(approval[_nftID][lender]);
         require(address(this).balance >= purchasePrice[_nftID]);
 
         isListed[_nftID] = false;
@@ -103,7 +103,7 @@ contract Escrow{
 	}
 
     //implement a special receive function in order to receive funds and increase the balance
-    // function receive() external payable {
+    receive() external payable {}
 		
 	// }
 

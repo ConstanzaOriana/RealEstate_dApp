@@ -3,15 +3,17 @@ import { ethers } from 'ethers';
 
 // Components
 import Navigation from './components/Navigation';
-import Search from './components/Search';
 import Home from './components/Home';
 
 // ABIs
-import RealEstate from './abis/RealEstate.json'
-import Escrow from './abis/Escrow.json'
+import RealEstateABI from "./abis/RealEstate.json"
+import EscrowABI from './abis/Escrow.json'
 
 // Config
 import config from './config.json';
+let realEstateAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+let escrowAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+let ethSigner
 
 function App() {
   const [provider, setProvider] = useState(null)
@@ -27,22 +29,28 @@ function App() {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     setProvider(provider)
     const network = await provider.getNetwork()
+    ethSigner = provider.getSigner()
 
-    const realEstate = new ethers.Contract(config[network.chainId].realEstate.address, RealEstate, provider)
-    const totalSupply = await realEstate.totalSupply()
-    const homes = []
+    const RealEstateInstance = new ethers.Contract(realEstateAddress, RealEstateABI, provider)
+    const totalSupply = await RealEstateInstance.totalSupply();
+    const homes = [] 
+
+    const escrowInstance = new ethers.Contract(escrowAddress, EscrowABI, provider)
+    setEscrow(escrowInstance)
 
     for (var i = 1; i <= totalSupply; i++) {
-      const uri = await realEstate.tokenURI(i)
-      const response = await fetch(uri)
-      const metadata = await response.json()
-      homes.push(metadata)
+      const uri = await RealEstateInstance.tokenURI(i)
+      const response = await fetch(uri, {
+        method: "GET",
+        headers: {
+          Accept: "application/json"
+        },
+      })
+      homes.push(response)
     }
 
     setHomes(homes)
 
-    const escrow = new ethers.Contract(config[network.chainId].escrow.address, Escrow, provider)
-    setEscrow(escrow)
 
     window.ethereum.on('accountsChanged', async () => {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -63,7 +71,7 @@ function App() {
   return (
     <div>
       <Navigation account={account} setAccount={setAccount} />
-      <Search />
+
 
       <div className='cards__section'>
 
